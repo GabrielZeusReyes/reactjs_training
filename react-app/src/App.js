@@ -1,31 +1,15 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
+import axios from 'axios';
 import Todos from './components/Todos';
 import Header from './components/layout/header';
 import './App.css';
 import { AddTodo } from './components/AddTodo';
 import About from './components/pages/About';
-import uuid from 'uuid';
 
 class App extends Component {
     state = {
-        todos: [
-            {
-                id: uuid.v4(),
-                title: 'Take out the trash',
-                completed: false
-            },
-            {
-                id: uuid.v4(),
-                title: 'Dinner with wife',
-                completed: false
-            },
-            {
-                id: uuid.v4(),
-                title: 'Meeting with boss',
-                completed: false
-            }
-        ]
+        todos: []
     };
 
     markComplete = id => {
@@ -40,22 +24,35 @@ class App extends Component {
     };
 
     delTodo = id => {
-        this.setState({
-            todos: [...this.state.todos.filter(todo => todo.id !== id)]
-        });
+        axios
+            .delete(`https://jsonplaceholder.typicode.com/todos/${id}`)
+            .then(res =>
+                this.setState({
+                    todos: [...this.state.todos.filter(todo => todo.id !== id)]
+                })
+            );
     };
 
     addTodo = title => {
-        const newTodo = {
-            id: uuid.v4(),
-            title,
-            completed: false
-        };
-        this.setState({
-            todos: [...this.state.todos, newTodo]
-        });
+        axios
+            .post('https://jsonplaceholder.typicode.com/todos', {
+                title,
+                completed: false
+            })
+            .then(res => {
+                this.setState({
+                    todos: [...this.state.todos, res.data]
+                });
+            });
     };
 
+    getTodoLists = () => {
+        axios
+            .get('https://jsonplaceholder.typicode.com/todos?_limit=10')
+            .then(res => this.setState({ todos: res.data }));
+    };
+
+    // lifecycle
     render() {
         // render props -> multiple components on a route
         // components prop -> adding a route on a single component
@@ -83,6 +80,11 @@ class App extends Component {
                 </div>
             </Router>
         );
+    }
+
+    //lifecycle
+    componentDidMount() {
+        this.getTodoLists();
     }
 }
 
