@@ -1,0 +1,4 @@
+installing redux
+    npm i redux react-redux redux-thunk
+    import Provider => glue react and redux together
+    import { createStore, applyMiddleware } from 'redux';
