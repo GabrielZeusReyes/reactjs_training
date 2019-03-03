@@ -1,0 +1,50 @@
+study about the ff:
+react hooks
+lifecycle hooks
+redux
+proptypes
+
+Install the ff:
+- react developer tools chrome extension
+- create react app
+    ** npx is for if you want the have a react app without downloading globally the create react app, use npx
+- es7 react/redux/graphql snippets extension
+    - to generate a class component: rce <tab>
+    - to generate a functional component: rcf <tab> **usually for static components
+
+Creation of react app   
+    - npx create-react-app .
+
+To add a state
+    state = {
+        <variable-name>: {}
+    }
+
+To add a prop
+    <props-name>={}
+
+To access a prop
+    this.props.<props-name>
+
+Prop types
+    - outside the class
+    <ComponentName>.propTypes = {
+        <props-name>: PropTypes.<type_of_props>.isRequired
+    }
+
+STYLING 
+    Inline
+        style={{}}
+            **don't use kebab, use camel case
+    variable
+        just create a variable outside the class
+    function
+        <function-name> = () => {}
+            ** you can if else base on the props
+
+FUNCTIONS
+    the reason we add an arrow function is that we don't have to use .bind(this), 
+    see markComplete function for details...
+
+STATES
+    this.setState => to change states
